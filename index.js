@@ -22,6 +22,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMembers, // Required for member count + join tracking
   ],
+});
   
 async function fetchGitHubRelease() {
   const res = await fetch(
