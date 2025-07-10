@@ -71,6 +71,11 @@ async function updateChannels() {
 
 client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
+  
+  client.user.setActivity("ISK pile up 💰", {
+    type: "WATCHING",
+  });
+
   updateChannels();
   setInterval(updateChannels, 10 * 60 * 1000); // every 10 mins
 });
