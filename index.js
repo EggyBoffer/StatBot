@@ -1,6 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import fetch from "node-fetch";
-
 import express from "express";
 
 const app = express();
@@ -20,13 +19,13 @@ const CHANNEL_ID_VERSION = process.env.VERSION_CHANNEL_ID;
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers, // Required for member count + join tracking
+    GatewayIntentBits.GuildMembers, // For member stats later
   ],
-});
-  
+}); // ✅ THIS was missing!
+
 async function fetchGitHubRelease() {
   const res = await fetch(
-    "https://api.github.com/repos/EggyBoffer/Eve-Isk-Management/releases/latest",
+    "https://api.github.com/repos/EggyBoffer/Eve-Isk-Management/releases/latest"
   );
   const data = await res.json();
   return data.tag_name || "Unknown";
@@ -34,7 +33,7 @@ async function fetchGitHubRelease() {
 
 async function fetchDownloadCount() {
   const res = await fetch(
-    "https://api.github.com/repos/EggyBoffer/Eve-Isk-Management/releases",
+    "https://api.github.com/repos/EggyBoffer/Eve-Isk-Management/releases"
   );
   const releases = await res.json();
   return releases.reduce((total, release) => {
@@ -65,7 +64,7 @@ async function updateChannels() {
 client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
   updateChannels();
-  setInterval(updateChannels, 10 * 60 * 1000); // every 10 minutes
+  setInterval(updateChannels, 10 * 60 * 1000); // every 10 mins
 });
 
 client.login(DISCORD_TOKEN);
