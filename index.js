@@ -19,18 +19,19 @@ const CHANNEL_ID_MEMBERS = process.env.MEMBER_COUNT_CHANNEL_ID;
 
 const client = new Client({
   intents: [
-  GatewayIntentBits.Guilds,
-  GatewayIntentBits.GuildMembers,
-],
-presence: {
-  activities: [
-    {
-      name: "ISK pile up 💰",
-      type: "WATCHING",
-    },
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
   ],
-  status: "online", // can be 'online', 'idle', 'dnd', or 'invisible'
-}); // ✅ THIS was missing!
+  presence: {
+    activities: [
+      {
+        name: "ISK pile up 💰",
+        type: "WATCHING",
+      },
+    ],
+    status: "online", // can be 'online', 'idle', 'dnd', or 'invisible'
+  }
+}); 
 
 async function fetchGitHubRelease() {
   const res = await fetch(
