@@ -15,6 +15,7 @@ app.listen(3000, () => {
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID_DOWNLOADS = process.env.DOWNLOAD_CHANNEL_ID;
 const CHANNEL_ID_VERSION = process.env.VERSION_CHANNEL_ID;
+const CHANNEL_ID_MEMBERS = process.env.MEMBER_COUNT_CHANNEL_ID;
 
 const client = new Client({
   intents: [
@@ -51,6 +52,13 @@ async function updateChannels() {
 
     const channelDownloads = await client.channels.fetch(CHANNEL_ID_DOWNLOADS);
     const channelVersion = await client.channels.fetch(CHANNEL_ID_VERSION);
+
+    const guild = client.guilds.cache.first(); // Gets your server
+    const memberCount = guild?.memberCount || 0;
+    
+    const channelMembers = await client.channels.fetch(CHANNEL_ID_MEMBERS);
+    if (channelMembers)
+      await channelMembers.setName(`👥 Members: ${memberCount}`);
 
     if (channelDownloads)
       await channelDownloads.setName(`📥 Downloads: ${downloads}`);
